@@ -2,9 +2,10 @@ import openai
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=".env", override=True) 
 api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = api_key
+
 
 def generate_quiz(text, num_questions=5):
     prompt = f"""
