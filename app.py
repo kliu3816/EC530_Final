@@ -1,30 +1,34 @@
-from fastapi import FastAPI, UploadFile, File
+# app.py
+from fastapi import FastAPI, UploadFile, File, Form
 from pdf_parser import extract_text_from_pdf
 from quiz_generator import generate_quiz
 from s3_uploader import upload_pdf_to_s3
-import os
-import shutil
-
+import os, shutil
+import json
 
 app = FastAPI()
 
 @app.post("/upload-pdf/")
-async def upload_pdf(file: UploadFile = File(...)):
-    # Save locally
-    temp_path = f"temp_{file.filename}"
-    with open(temp_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+async def upload_pdf(
+    file: UploadFile = File(...),
+    num_questions: int   = Form(5),          # default to 5
+):
+    # 1) store locally
+    tmp = f"temp_{file.filename}"
+    with open(tmp, "wb") as buf:
+        shutil.copyfileobj(file.file, buf)
 
-    # Upload to S3
-    # upload_pdf_to_s3(open(temp_path, "rb"), file.filename)
+    # 2) optional: upload to S3
+    #upload_pdf_to_s3(open(tmp, "rb"), file.filename)
 
-    # Extract text
-    text = extract_text_from_pdf(temp_path)
+    # 3) extract text
+    text = extract_text_from_pdf(tmp)
 
-    # Generate quiz
-    quiz = generate_quiz(text)
+    # 4) generate quiz with explanations
+    quiz_list = generate_quiz(text, num_questions)
 
-    # Clean up
-    os.remove(temp_path)
+    # 5) cleanup
+    os.remove(tmp)
 
-    return {"quiz": quiz}
+    # 6) return as JSON string
+    return {"quiz": json.dumps(quiz_list)}
