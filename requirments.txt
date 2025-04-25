@@ -1,6 +1,7 @@
 fastapi
 uvicorn
+python-multipart
 boto3
 openai
-python-multipart
 PyMuPDF
+python-dotenv
