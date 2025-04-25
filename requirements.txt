@@ -5,3 +5,5 @@ boto3
 openai
 PyMuPDF
 python-dotenv
+streamlit
+requests
