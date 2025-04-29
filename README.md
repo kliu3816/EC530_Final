@@ -45,7 +45,7 @@ This project allows educators to upload a PDF file, automatically generate multi
 - AWS CLI (for deployment)
 
 ### 1. Clone the repository
-- git clone https://github.com/yourusername/EC530_final.git
-- cd EC530_final
+- git clone https://github.com/yourusername/EC530_Final.git
+- cd EC530_Final
 - uvicorn app:app --reload --port 8000
 - streamlit run streamlit_app.py
