@@ -29,7 +29,7 @@ Text:
 {text[:4000]}
 \"\"\"
 """
-    resp = openai.ChatCompletion.create(
+    resp = openai.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7,

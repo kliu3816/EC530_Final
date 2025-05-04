@@ -6,7 +6,27 @@ from s3_uploader import upload_pdf_to_s3
 import os, shutil
 import json
 
+from fastapi import Request, status
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],            # or set to ["https://<your-frontend-domain>"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+@app.exception_handler(Exception)
+async def all_exception_handler(request: Request, exc: Exception):
+    # Return the exception string in JSON so Swagger UI will show it
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={"detail": str(exc)},
+    )
+
+
 
 @app.post("/upload-pdf/")
 async def upload_pdf(

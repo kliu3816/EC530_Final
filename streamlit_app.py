@@ -3,7 +3,7 @@ import requests
 import json
 
 # URL of your FastAPI quiz-generation endpoint
-API_URL = "https://fpdmxmp2s3.us-east-1.awsapprunner.com"
+API_URL = "https://fpdmxmp2s3.us-east-1.awsapprunner.com/upload-pdf/"
 
 # Utility to reset session state
 def reset_state():
