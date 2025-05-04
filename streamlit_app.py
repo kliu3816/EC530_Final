@@ -13,7 +13,7 @@ def reset_state():
 
 # Page configuration
 st.set_page_config(page_title="PDF to Quiz", layout="centered")
-st.title("📄 ➡️ 📝 PDF → Quiz Generator")
+st.title("PDF Quiz Generator")
 
 # Initialize session state defaults
 st.session_state.setdefault("quiz", None)
